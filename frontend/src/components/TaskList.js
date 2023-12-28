@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import ClockLoader from "react-spinners/ClockLoader";
 
-const { REACT_APP_BACKEND_URI } = process.env;
+const REACT_APP_BACKEND_URI = "http://localhost:8000";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
