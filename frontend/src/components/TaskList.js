@@ -5,8 +5,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import ClockLoader from "react-spinners/ClockLoader";
 
-const REACT_APP_BACKEND_URI = "http://localhost:8000";
-
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [complatedTasks, setComplatedTasks] = useState([]);
@@ -26,7 +24,7 @@ const TaskList = () => {
   const getTasks = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`${REACT_APP_BACKEND_URI}/api/tasks`);
+      const { data } = await axios.get(`/api/tasks`);
       setTasks(data);
       setLoading(false);
     } catch (error) {
@@ -44,7 +42,7 @@ const TaskList = () => {
       return toast.error("Input field connot be empty.");
     }
     try {
-      await axios.post(`${REACT_APP_BACKEND_URI}/api/tasks`, formData);
+      await axios.post(`/api/tasks`, formData);
       toast.success("Task created successfully.");
       getTasks();
       setFormData({ ...formData, name: "" });
@@ -56,7 +54,7 @@ const TaskList = () => {
   //   delete a tasks
   const deleteTaskshandler = async (id) => {
     try {
-      await axios.delete(`${REACT_APP_BACKEND_URI}/api/tasks/${id}`);
+      await axios.delete(`/api/tasks/${id}`);
       toast.success("Task deleted successfully.");
       getTasks();
     } catch (error) {
@@ -89,10 +87,7 @@ const TaskList = () => {
       return toast.error("Input field connot be empty.");
     }
     try {
-      await axios.patch(
-        `${REACT_APP_BACKEND_URI}/api/tasks/${taskId}`,
-        formData
-      );
+      await axios.patch(`/api/tasks/${taskId}`, formData);
       setFormData({ ...formData, name: "" });
       setEditingTask(false);
       getTasks();
@@ -106,10 +101,7 @@ const TaskList = () => {
       complated: true,
     };
     try {
-      await axios.patch(
-        `${REACT_APP_BACKEND_URI}/api/tasks/${task._id}`,
-        newFormData
-      );
+      await axios.patch(`/api/tasks/${task._id}`, newFormData);
       getTasks();
     } catch (error) {
       toast.error(error.message);
